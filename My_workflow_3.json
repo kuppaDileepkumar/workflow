@@ -1,0 +1,202 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "c2d29377-6cb9-4d19-bd0e-7934680db617",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8d27871b-5ae9-4601-a259-e3b7798e24a2",
+      "name": "Webhook",
+      "webhookId": "c2d29377-6cb9-4d19-bd0e-7934680db617"
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $json.body.email }}",
+        "toEmail": "kuppa6732@gmail.com",
+        "subject": "New Lead Submitted from Website",
+        "html": "={{ $json.body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "c95a56e9-c94f-4c04-a65a-f78a3ef621a2",
+      "name": "Send Email",
+      "webhookId": "525625f3-0be8-4767-88fe-324e5a845701",
+      "credentials": {
+        "smtp": {
+          "id": "A2liMiHZFroVmbxc",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appNiBQfhcLUTfdAp",
+          "mode": "list",
+          "cachedResultName": "leads",
+          "cachedResultUrl": "https://airtable.com/appNiBQfhcLUTfdAp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblk8DVjbiFFOfFSF",
+          "mode": "list",
+          "cachedResultName": "leads",
+          "cachedResultUrl": "https://airtable.com/appNiBQfhcLUTfdAp/tblk8DVjbiFFOfFSF"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "name": "={{ $('Webhook').item.json.body.name }}",
+            "email": "={{ $('Webhook').item.json.body.email }}",
+            "message": "={{ $('Webhook').item.json.body.message }}",
+            "company": "={{ $('Webhook').item.json.body.company }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Attachment Summary",
+              "displayName": "Attachment Summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "99c31a8f-5b8e-46b2-a733-311bd59e1382",
+      "name": "Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "ow1deZI5gCoshWo6",
+          "name": "Airtable Personal Access Token account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "5i5nPeH8JahSsmrQ",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "executionTimeout": -1
+  },
+  "versionId": "b3a6f28b-cbb8-4b94-a778-10ee8069a4ae",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ca5d5dff180a4e819b60561aa9b1480bb7ff425178003cdb073e5cd3da002fb6"
+  },
+  "id": "5i5nPeH8JahSsmrQ",
+  "tags": []
+}
